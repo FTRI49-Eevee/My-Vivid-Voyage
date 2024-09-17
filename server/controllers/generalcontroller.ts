@@ -1,5 +1,15 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-const generalController = {};
+const generalController = {
+  getMap: (req: Request, res: Response, next: NextFunction) => {
+    console.log(req);
+    return next();
+  },
+
+  saveMap: (req: Request, res: Response, next: NextFunction) => {
+    console.log(req);
+    return next();
+  },
+};
 
 export default generalController;
