@@ -1,10 +1,11 @@
 {
   "name": "my-vivid-voyage",
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc",
+    "build": "vite build",
     "watch": "tsc --watch",
     "lint": "eslint .",
     "preview": "vite preview",
