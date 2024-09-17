@@ -1,13 +1,10 @@
 import express from 'express';
 import generalController from './controllers/generalcontroller.js';
-const app = express();
 import { createClient } from '@supabase/supabase-js';
-
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
+const app = express();
 app.use(express.json());
 const PORT = 8080;
 app.use('/getmap', generalController.getMap, (req, res) => {
