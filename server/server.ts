@@ -1,8 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import generalController from './controllers/generalcontroller.js';
+// import generalRouter from './routes/generalrouter.js';
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const PORT = 8080;
 
 interface DefaultError {
@@ -11,9 +13,23 @@ interface DefaultError {
   message: { err: string };
 }
 
-app.use('/getmap', generalController.getMap, (req: Request, res: Response) => {
-  console.log('HIT!');
+app.get('/getmap', generalController.getMap, (req: Request, res: Response) => {
+  console.log('HIT! /getmap');
   res.status(200).send(res.locals.getMap);
+});
+
+app.post(
+  '/savemap',
+  generalController.saveMap,
+  (req: Request, res: Response) => {
+    console.log('HIT! /savemap');
+    res.status(200).send(res.locals.saveMap);
+  }
+);
+
+app.get('/db', generalController.getData, (req: Request, res: Response) => {
+  console.log('HIT! /db');
+  res.status(200).send(res.locals.getData);
 });
 
 app.use('/', (_req, res) => {

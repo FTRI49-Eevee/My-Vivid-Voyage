@@ -1,13 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
+import db from '../models/usermodel';
 
 const generalController = {
   getMap: (req: Request, res: Response, next: NextFunction) => {
-    console.log(req);
+    console.log('getMap: ', req);
     return next();
   },
 
   saveMap: (req: Request, res: Response, next: NextFunction) => {
-    console.log(req);
+    console.log('saveMap: ', req);
+    return next();
+  },
+
+  getData: (req: Request, res: Response, next: NextFunction) => {
+    console.log('getData: ', req);
     return next();
   },
 };
