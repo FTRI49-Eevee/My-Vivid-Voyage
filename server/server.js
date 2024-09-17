@@ -5,6 +5,7 @@ app.use(express.json());
 const PORT = 8080;
 app.use('/getmap', generalController.getMap, (req, res) => {
     console.log('HIT!');
+    res.status(200).send(res.locals.getMap);
 });
 app.use('/', (_req, res) => {
     res.status(404).send('Error page not found!');
