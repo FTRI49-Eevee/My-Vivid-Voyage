@@ -19,5 +19,9 @@ const generalController = {
         console.log('saveData: ', req);
         return next();
     },
+    saveData: (req, res, next) => {
+        console.log('saveData: ', req);
+        return next();
+    },
 };
 export default generalController;

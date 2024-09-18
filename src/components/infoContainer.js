@@ -1,4 +1,5 @@
 import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
+// import React from 'react';
 //functionality to determine if we visited state or not
 function InfoContainer(props) {
     const { selectedRegion } = props;
