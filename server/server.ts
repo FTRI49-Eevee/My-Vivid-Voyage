@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes.js';
 import session from 'express-session';
 import passport from 'passport';
 import { Profile, Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import dotenv from 'dotenv';
 
 // dotenv.config();
 
