@@ -1,5 +1,6 @@
 import express from 'express';
 import generalController from './controllers/generalcontroller.js';
+// import { createClient } from '@supabase/supabase-js';
 // const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 // const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // export const supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -18,6 +19,10 @@ app.post('/savemap', generalController.saveMap, (req, res) => {
 app.get('/db', generalController.getData, (req, res) => {
     console.log('HIT! /db');
     res.status(200).send(res.locals.getData);
+});
+app.post('/db', generalController.saveData, (req, res) => {
+    console.log('HIT! /db');
+    res.status(200).send(res.locals.saveData);
 });
 app.use('/', (_req, res) => {
     res.status(404).send('Error page not found!');

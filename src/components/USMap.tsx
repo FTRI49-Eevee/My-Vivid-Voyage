@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import InfoContainer from './infoContainer';
-import Form from './formContainer';
+import VisitedForm from './formContainer';
 // Import a JSON file that includes the geographical data of US states
 const geoUrl = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
 
@@ -18,13 +18,16 @@ const USMap: React.FC<USMapProps> = () => {
 
   // randomize color
   const rgbRandom = (): string => {
+    function rgbRand() {
+      return Math.floor(Math.random() * 255)
+    }
     return (
       'rgb(' +
-      Math.floor(Math.random() * 255) +
+      rgbRand() +
       ',' +
-      Math.floor(Math.random() * 255) +
+      rgbRand() +
       ',' +
-      Math.floor(Math.random() * 255) +
+      rgbRand() +
       ')'
     );
   };
@@ -81,7 +84,7 @@ const USMap: React.FC<USMapProps> = () => {
       </ComposableMap>
       {hoveredRegion && <div>Hovering over: {hoveredRegion}</div>}
       <InfoContainer selectedRegion={selectedRegion} />
-      <Form />
+      <VisitedForm region={selectedRegion}/>
     </div>
   );
 };
