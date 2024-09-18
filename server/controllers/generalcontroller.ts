@@ -12,8 +12,11 @@ const generalController = {
     return next();
   },
 
-  getData: (req: Request, res: Response, next: NextFunction) => {
-    console.log('getData: ', req);
+  getData: async (req: Request, res: Response, next: NextFunction) => {
+    const query = `SELECT * FROM users_states`;
+    await db.query(query).then((data: unknown) => {
+      res.locals.getData = data;
+    });
     return next();
   },
   saveData: (req: Request, res: Response, next: NextFunction) => {

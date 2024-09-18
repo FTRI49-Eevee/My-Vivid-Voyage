@@ -1,3 +1,4 @@
+import db from '../models/usermodel';
 const generalController = {
     getMap: (req, res, next) => {
         console.log('getMap: ', req);
@@ -7,8 +8,15 @@ const generalController = {
         console.log('saveMap: ', req);
         return next();
     },
-    getData: (req, res, next) => {
-        console.log('getData: ', req);
+    getData: async (req, res, next) => {
+        const query = `SELECT * FROM users_states`;
+        await db.query(query).then((data) => {
+            res.locals.getData = data;
+        });
+        return next();
+    },
+    saveData: (req, res, next) => {
+        console.log('saveData: ', req);
         return next();
     },
 };
