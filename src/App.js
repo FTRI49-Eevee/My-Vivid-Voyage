@@ -5,6 +5,6 @@ import { Route, Routes } from "react-router-dom";
 import Login from './components/userlogs/login';
 import Signup from './components/userlogs/signup';
 function App() {
-    return (_jsxs(Routes, { children: [_jsx(Route, { path: '/', element: _jsx(Login, {}) }), _jsx(Route, { path: '/home', element: _jsx(USMap, {}) }), _jsx(Route, { path: '/signup', element: _jsx(Signup, {}) })] }));
+    return (_jsxs(Routes, { children: [_jsx(Route, { path: '/', element: _jsx(Login, {}) }), _jsx(Route, { path: '/login', element: _jsx(Login, {}) }), _jsx(Route, { path: '/home', element: _jsx(USMap, {}) }), _jsx(Route, { path: '/signup', element: _jsx(Signup, {}) })] }));
 }
 export default App;
