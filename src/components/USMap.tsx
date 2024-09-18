@@ -3,6 +3,7 @@ import React, { useState, useEffect, ReactElement } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import InfoContainer from './infoContainer';
 import VisitedForm from './formContainer';
+import Logout from './userlogs/logout'
 // Import a JSON file that includes the geographical data of US states
 const geoUrl = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
 
@@ -53,6 +54,7 @@ const USMap: React.FC<USMapProps> = () => {
 
   return (
     <div>
+      <Logout />
       <div className='map'>
       <h1>Clickable US Map</h1>
       <ComposableMap projection='geoAlbersUsa'>

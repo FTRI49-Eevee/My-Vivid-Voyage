@@ -2,7 +2,6 @@ import {useState} from 'react'
 import { useNavigate } from "react-router-dom";
 
 
-
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -10,23 +9,27 @@ const Signup = () => {
   const navigate = useNavigate()
 
   function onButtonClick() {
-    navigate('/');
-    // request once we get backend setup
-    // fetch('/signup', {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     'username': username,
-    //     'password': password,
-    //   })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log(data)
-    //   //logic for successful login
-    // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
+    // navigate('/');
+    //request once we get backend setup
+    fetch('/signup', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'username': username,
+        'password': password,
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      //logic for successful login
+      navigate('/login');
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 
   return (

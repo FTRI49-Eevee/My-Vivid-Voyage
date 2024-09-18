@@ -1,26 +1,41 @@
-import {useState} from 'react'
+import {useState , useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
-
-
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/home')
+    }
+  }, [navigate])
+
   function onButtonClick() {
-    navigate('/home')
     // remove navigate and do fetch once backend is setup
     fetch('/login', {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         'username': username,
         'password': password,
-      })
+      }),
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.message || 'Login failed');
+      });
+    }
+    return response.json();
+    })
     .then(data => {
       console.log(data)
+      localStorage.setItem('token', data.token)
       //logic for successful login
       navigate('/home')
     })
