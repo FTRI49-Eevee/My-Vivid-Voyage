@@ -18,13 +18,7 @@ const USMap = () => {
         function rgbRand() {
             return Math.floor(Math.random() * 255);
         }
-        return ('rgb(' +
-            rgbRand() +
-            ',' +
-            rgbRand() +
-            ',' +
-            rgbRand() +
-            ')');
+        return 'rgb(' + rgbRand() + ',' + rgbRand() + ',' + rgbRand() + ')';
     };
     const onRegionClick = async (regionId, regionName) => {
         console.log(`Clicked state with id: ${regionId}`);
@@ -41,7 +35,12 @@ const USMap = () => {
     // useEffect(() => {
     //   console.log(visitedRegions);
     // }, [visitedRegions]);
-    return (_jsxs("div", { style: { position: 'relative' }, children: [_jsxs("div", { style: { position: 'absolute', top: 10, right: 10 }, children: [" ", _jsx(Logout, {}), " "] }), _jsxs("div", { className: 'map', children: [_jsx("h1", { children: "Clickable US Map" }), _jsx(ComposableMap, { projection: 'geoAlbersUsa', children: _jsx(Geographies, { geography: geoUrl, children: ({ geographies }) => geographies.map((geo) => {
+    return (_jsxs("div", { style: {
+            position: 'absolute',
+            justifyContent: 'center',
+            left: '220px',
+            top: '30px',
+        }, children: [_jsxs("div", { style: { position: 'relative', top: 10, right: 10 }, children: [' ', _jsx(Logout, {}), ' '] }), _jsxs("div", { className: "map", children: [_jsx("h1", { children: "Clickable US Map" }), _jsx(ComposableMap, { projection: "geoAlbersUsa", children: _jsx(Geographies, { geography: geoUrl, children: ({ geographies }) => geographies.map((geo) => {
                                 const regionId = geo.id;
                                 const regionName = geo.properties.name;
                                 return (_jsx(Geography, { geography: geo, onMouseEnter: () => setHoveredRegion(regionName), onMouseLeave: () => setHoveredRegion(null), onClick: () => onRegionClick(regionId, regionName), style: {
@@ -61,6 +60,15 @@ const USMap = () => {
                                             outline: 'none',
                                         },
                                     } }, regionId));
-                            }) }) }), hoveredRegion && _jsxs("div", { children: ["Hovering over: ", hoveredRegion] })] }), regionInfo] }));
+                            }) }) }), hoveredRegion && (_jsxs("div", { style: {
+                            position: 'absolute',
+                            padding: '10px',
+                            marginBottom: '10px',
+                            paddingBottom: '50px',
+                            left: '300px',
+                        }, children: ["Hovering over: ", hoveredRegion] }))] }), _jsx("div", { style: {
+                    position: 'absolute',
+                    left: '0px',
+                }, children: regionInfo })] }));
 };
 export default USMap;

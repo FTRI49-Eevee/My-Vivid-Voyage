@@ -16,7 +16,7 @@ const USMap: React.FC<USMapProps> = () => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [visitedRegions, setVisitedRegions] = useState<
-    string[] | number | null
+    string[] | number[] | null
   >([]);
   const [regionInfo, setRegionInfo] = useState<ReactElement>(<div></div>);
 
@@ -45,8 +45,15 @@ const USMap: React.FC<USMapProps> = () => {
   // }, [visitedRegions]);
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div style={{ position: 'absolute', top: 10, right: 10 }}>
+    <div
+      style={{
+        position: 'absolute',
+        justifyContent: 'center',
+        left: '220px',
+        top: '30px',
+      }}
+    >
+      <div style={{ position: 'relative', top: 10, right: 10 }}>
         {' '}
         <Logout />{' '}
       </div>
@@ -57,7 +64,7 @@ const USMap: React.FC<USMapProps> = () => {
             {({ geographies }) =>
               geographies.map((geo) => {
                 const regionId = geo.id;
-                const regionName = geo.properties.name;
+                const regionName: string = geo.properties.name;
 
                 return (
                   <Geography
@@ -89,11 +96,30 @@ const USMap: React.FC<USMapProps> = () => {
             }
           </Geographies>
         </ComposableMap>
-        {hoveredRegion && <div>Hovering over: {hoveredRegion}</div>}
+        {hoveredRegion && (
+          <div
+            style={{
+              position: 'absolute',
+              padding: '10px',
+              marginBottom: '10px',
+              paddingBottom: '50px',
+              left: '300px',
+            }}
+          >
+            Hovering over: {hoveredRegion}
+          </div>
+        )}
       </div>
       {/* <InfoContainer selectedRegion={selectedRegion} />
       <VisitedForm region={selectedRegion}/> */}
-      {regionInfo}
+      <div
+        style={{
+          position: 'absolute',
+          left: '0px',
+        }}
+      >
+        {regionInfo}
+      </div>
     </div>
   );
 };

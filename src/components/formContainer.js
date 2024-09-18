@@ -41,6 +41,11 @@ const AddingRegionInfo = (props) => {
             console.error('Error:', error);
         }
     };
-    return (_jsxs("form", { className: "dataForm", onSubmit: visitedData, children: [_jsx("input", { type: "file", name: "picture", accept: "image/png, image/jpeg", onChange: handleImage }), _jsx("input", { type: "text", placeholder: "Caption", onChange: (event) => setCaption(event.target.value) }), _jsx("input", { type: "submit" })] }));
+    return (_jsxs("form", { className: "dataForm", onSubmit: visitedData, style: {
+            display: 'flex',
+            position: 'absolute',
+            justifyContent: 'center',
+            left: '235px',
+        }, children: [_jsx("input", { type: "file", name: "picture", accept: "image/png, image/jpeg", onChange: handleImage, style: { display: 'flex', justifyContent: 'center', padding: '10px' } }), _jsx("input", { type: "text", placeholder: "Caption", onChange: (event) => setCaption(event.target.value), style: { width: '300px' } }), _jsx("input", { type: "submit" })] }));
 };
 export default AddingRegionInfo;
