@@ -1,13 +1,32 @@
 import express from 'express';
+import multer from 'multer';
 import generalController from './controllers/generalcontroller.js';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 // import { createClient } from '@supabase/supabase-js';
 // const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 // const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const app = express();
 app.use(express.json());
+// const upload = multer(); // This will handle multipart/form-data
 app.use(express.urlencoded({ extended: true }));
 const PORT = 8080;
+//storage
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const Storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        console.log(path.resolve(__dirname, './models'));
+        cb(null, path.resolve(__dirname, './models'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '--' + file.originalname);
+    }
+});
+const upload = multer({
+    storage: Storage
+});
 app.get('/getmap', generalController.getMap, (req, res) => {
     console.log('HIT! /getmap');
     res.status(200).send(res.locals.getMap);
@@ -20,8 +39,10 @@ app.get('/db', generalController.getData, (req, res) => {
     console.log('HIT! /db');
     res.status(200).send(res.locals.getData);
 });
-app.post('/db', generalController.saveData, (req, res) => {
+app.post('/db', upload.single('image'), generalController.saveData, (req, res) => {
     console.log('HIT! /db');
+    const { caption } = req.body;
+    console.log(caption);
     res.status(200).send(res.locals.saveData);
 });
 app.use('/', (_req, res) => {
@@ -39,4 +60,4 @@ app.use((err, _req, res, _next) => {
     console.log(errorObj.log);
     return res.status(errorObj.status).json(errorObj.message);
 });
-app.listen(PORT, () => console.log(`Server listening on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server listening on Port: ${PORT}`));

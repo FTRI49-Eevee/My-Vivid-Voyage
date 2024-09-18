@@ -17,7 +17,7 @@ const generalController = {
     return next();
   },
   saveData: (req: Request, res: Response, next: NextFunction) => {
-    console.log('saveData: ', req);
+    console.log('saveData: ', {...req.body});
     return next();
   },
 };

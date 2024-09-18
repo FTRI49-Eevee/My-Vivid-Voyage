@@ -1,5 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
+import multer from 'multer';
 import generalController from './controllers/generalcontroller.js';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 // import { createClient } from '@supabase/supabase-js';
 
 // const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -9,6 +12,7 @@ import generalController from './controllers/generalcontroller.js';
 
 const app = express();
 app.use(express.json());
+// const upload = multer(); // This will handle multipart/form-data
 app.use(express.urlencoded({ extended: true }));
 const PORT = 8080;
 
@@ -17,6 +21,22 @@ interface DefaultError {
   status: number;
   message: { err: string };
 }
+
+//storage
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const Storage = multer.diskStorage({
+  destination:(req, file, cb) => {
+    console.log(path.resolve(__dirname, './models'))
+    cb(null, path.resolve(__dirname, './models'))
+  },
+  filename:(req, file, cb) => {
+    cb(null, Date.now() + '--' + file.originalname);
+  }
+});
+const upload = multer({
+  storage: Storage
+})
 
 app.get('/getmap', generalController.getMap, (req: Request, res: Response) => {
   console.log('HIT! /getmap');
@@ -37,8 +57,13 @@ app.get('/db', generalController.getData, (req: Request, res: Response) => {
   res.status(200).send(res.locals.getData);
 });
 
-app.post('/db', generalController.saveData, (req: Request, res: Response) => {
+app.post('/db',
+  upload.single('image'), 
+  generalController.saveData, 
+  (req: Request, res: Response) => {
   console.log('HIT! /db');
+  const {caption} = req.body
+  console.log(caption)
   res.status(200).send(res.locals.saveData);
 });
 
@@ -61,5 +86,5 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`Server listening on http://localhost:${PORT}`)
+  console.log(`Server listening on Port: ${PORT}`)
 );

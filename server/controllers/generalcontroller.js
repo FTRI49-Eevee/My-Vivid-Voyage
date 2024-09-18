@@ -12,7 +12,7 @@ const generalController = {
         return next();
     },
     saveData: (req, res, next) => {
-        console.log('saveData: ', req);
+        console.log('saveData: ', { ...req.body });
         return next();
     },
 };

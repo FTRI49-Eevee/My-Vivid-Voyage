@@ -1,7 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from 'react';
 // form for no data
-const AddingRegionInfo = (region) => {
+const AddingRegionInfo = (props) => {
+    const { selectedRegion } = props;
     const [imgInput, setImgInput] = useState('');
     const [caption, setCaption] = useState('');
     //image/file handler
@@ -11,13 +12,21 @@ const AddingRegionInfo = (region) => {
     const visitedData = async (event) => {
         event.preventDefault(); // Prevent the default form submission behavior
         const formData = new FormData();
-        formData.append('region', region + '');
+        formData.append('selectedRegion', selectedRegion);
         formData.append('image', imgInput);
         formData.append('caption', caption);
         console.log('Form submitted with region:', formData);
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+        console.log('caption submitted with region:', caption);
         try {
-            const response = await fetch("/db", {
+            const response = await fetch("http://localhost:8080/db", {
+                mode: 'no-cors',
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
                 body: formData,
             });
             if (response.ok) {
