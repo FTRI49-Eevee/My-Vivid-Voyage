@@ -3,25 +3,26 @@ import multer from 'multer';
 import generalController from './controllers/generalcontroller.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
 // import { createClient } from '@supabase/supabase-js';
 import userRoutes from './routes/userRoutes.js';
 import session from 'express-session';
 import passport from 'passport';
 import { Profile, Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
-dotenv.config();
+// dotenv.config();
 
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || '';
+// const supabaseUrl = process.env.SUPABASE_URL || '';
+// const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || '';
 
-const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
-const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
+// const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
+// const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
 
-if (!googleClientId || !googleClientSecret) {
-  throw new Error(
-    'Google Client ID and Client Secret must be provided in .env file'
-  );
-}
+// if (!googleClientId || !googleClientSecret) {
+//   throw new Error(
+//     'Google Client ID and Client Secret must be provided in .env file'
+//   );
+// }
 
 const app = express();
 app.use(express.json());
@@ -53,7 +54,6 @@ const upload = multer({
 });
 
 app.get('/getmap', generalController.getMap, (req: Request, res: Response) => {
-  console.log('HIT! /getmap');
   res.status(200).send(res.locals.getMap);
 });
 
@@ -61,13 +61,11 @@ app.post(
   '/savemap',
   generalController.saveMap,
   (req: Request, res: Response) => {
-    console.log('HIT! /savemap');
     res.status(200).send(res.locals.saveMap);
   }
 );
 
 app.get('/db', generalController.getData, (req: Request, res: Response) => {
-  console.log('HIT! /db');
   res.status(200).send(res.locals.getData);
 });
 
@@ -76,10 +74,7 @@ app.post(
   upload.single('image'),
   generalController.saveData,
   (req: Request, res: Response) => {
-    console.log('HIT! /db');
-    const { caption } = req.body;
-    console.log(caption);
-    res.status(200).send(res.locals.saveData);
+    res.status(200).json({ message: 'File received successfully' });
   }
 );
 

@@ -14,14 +14,24 @@ const generalController = {
 
   getData: async (req: Request, res: Response, next: NextFunction) => {
     const query = `SELECT * FROM users_states`;
-    await db.query(query).then((data: unknown) => {
-      res.locals.getData = data;
-    });
+    // await db.query(query).then((data: unknown) => {
+    //   res.locals.getData = data;
+    // });
     return next();
   },
   saveData: (req: Request, res: Response, next: NextFunction) => {
-    console.log('saveData: ', {...req.body});
-    return next();
+    const { selectedRegion, image, caption } = req.body;
+    if ((selectedRegion && image) || caption) {
+      return next();
+    } else {
+      return next({
+        log: 'An error occurred attempting to save data at generalController.saveData',
+        status: 500,
+        message: {
+          err: 'An error occurred attempting to save data at generalController.saveData',
+        },
+      });
+    }
   },
 };
 
