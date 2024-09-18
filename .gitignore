@@ -13,8 +13,8 @@ dist-ssr
 *.local
 .env
 
-# tsc build files
-**.js
+# # tsc build files
+# **.js
 
 # Editor directories and files
 .vscode/*
