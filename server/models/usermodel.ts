@@ -1,8 +1,10 @@
 import pg from 'pg';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const { Pool } = pg;
 
-const PG_URI = 'postgresql://postgres.rmtrdyqoemlxzavpvpih:MjcX1GTJLl1jdx0R@aws-0-us-west-1.pooler.supabase.com:6543/postgres';
+const PG_URI = process.env.PG_URI;
 
 const pool = new Pool({
   connectionString: PG_URI,
