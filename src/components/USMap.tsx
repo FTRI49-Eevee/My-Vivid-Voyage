@@ -41,9 +41,9 @@ const USMap: React.FC<USMapProps> = () => {
     await setVisitedRegions([...visitedRegions, regionId]);
     // Perform additional actions, like fetching data for the clicked state
     if (regionId % 2 == 0) {
-      return setRegionInfo(<InfoContainer selectedRegion={selectedRegion}/>)
+      return setRegionInfo(<InfoContainer selectedRegion={regionName}/>)
     } else {
-      return setRegionInfo(<VisitedForm region={selectedRegion}/>)
+      return setRegionInfo(<VisitedForm selectedRegion={regionName}/>)
 
     }
   };
