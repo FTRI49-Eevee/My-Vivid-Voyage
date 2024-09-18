@@ -1,5 +1,5 @@
 // USMap.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import InfoContainer from './infoContainer';
 import VisitedForm from './formContainer';
@@ -15,6 +15,8 @@ const USMap: React.FC<USMapProps> = () => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [visitedRegions, setVisitedRegions] = useState<string[]>([]);
+  const [regionInfo, setRegionInfo] = useState<ReactElement>(<div></div>);
+
 
   // randomize color
   const rgbRandom = (): string => {
@@ -32,12 +34,17 @@ const USMap: React.FC<USMapProps> = () => {
     );
   };
 
-  const onRegionClick = async (regionId: string, regionName: string) => {
+  const onRegionClick = async (regionId: number, regionName: string) => {
     console.log(`Clicked state with id: ${regionId}`);
     setSelectedRegion(regionName);
     await setVisitedRegions([...visitedRegions, regionId]);
     // Perform additional actions, like fetching data for the clicked state
-    
+    if (regionId % 2 == 0) {
+      return setRegionInfo(<InfoContainer selectedRegion={selectedRegion}/>)
+    } else {
+      return setRegionInfo(<VisitedForm region={selectedRegion}/>)
+
+    }
   };
 
   // useEffect(() => {
@@ -46,6 +53,7 @@ const USMap: React.FC<USMapProps> = () => {
 
   return (
     <div>
+      <div className='map'>
       <h1>Clickable US Map</h1>
       <ComposableMap projection='geoAlbersUsa'>
         <Geographies geography={geoUrl}>
@@ -85,8 +93,10 @@ const USMap: React.FC<USMapProps> = () => {
         </Geographies>
       </ComposableMap>
       {hoveredRegion && <div>Hovering over: {hoveredRegion}</div>}
-      <InfoContainer selectedRegion={selectedRegion} />
-      <VisitedForm region={selectedRegion}/>
+      </div>
+      {/* <InfoContainer selectedRegion={selectedRegion} />
+      <VisitedForm region={selectedRegion}/> */}
+      {regionInfo}
     </div>
   );
 };
