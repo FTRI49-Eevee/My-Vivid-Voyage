@@ -11,19 +11,19 @@ import passport from 'passport';
 import { Profile, Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
 
-// dotenv.config();
+dotenv.config();
 
-// const supabaseUrl = process.env.SUPABASE_URL || '';
-// const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.SUPABASE_URL || '';
+const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || '';
 
-// const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
-// const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
+const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
 
-// if (!googleClientId || !googleClientSecret) {
-//   throw new Error(
-//     'Google Client ID and Client Secret must be provided in .env file'
-//   );
-// }
+if (!googleClientId || !googleClientSecret) {
+  throw new Error(
+    'Google Client ID and Client Secret must be provided in .env file'
+  );
+}
 
 const app = express();
 app.use(express.json());
