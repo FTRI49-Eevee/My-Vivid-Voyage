@@ -2,7 +2,7 @@ import pg from 'pg';
 
 const { Pool } = pg;
 
-const PG_URI = 'postgresql://postgres.ykndlhsewyrotfgajfgz:HSLoBYCTatpr19vw@aws-0-us-west-1.pooler.supabase.com:6543/postgres';
+const PG_URI = '';
 
 const pool = new Pool({
   connectionString: PG_URI,
