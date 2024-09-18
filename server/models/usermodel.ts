@@ -1,19 +1,30 @@
-import { Pool } from 'pg';
+import pg from 'pg';
+import dotenv from 'dotenv';
 
-const PG_URI =
-  'postgresql://postgres.qpzamvtwqrdmrgaotors:lyrerae4q0ZhK3X2@aws-0-us-west-1.pooler.supabase.com:6543/postgres';
+dotenv.config();
+const { Pool } = pg;
+
+const PG_URI = process.env.PG_URI;
 
 const pool = new Pool({
   connectionString: PG_URI,
 });
 
-module.exports = {
-  query: (
-    text: string,
-    params: [],
-    callback: (err: Error, result: unknown) => void
-  ) => {
-    console.log('executed query', text);
-    return pool.query(text, params, callback);
-  },
+interface User {
+  username: string;
+  password_hash: string;
+}
+
+interface QueryResponse {
+  rows: User[];
+}
+
+const query = async (text: string, params: (string | number)[]): Promise<QueryResponse> => {
+  console.log('executed query', text);
+  const res = await pool.query(text, params);
+  return res; 
+};
+
+export default {
+  query,
 };
