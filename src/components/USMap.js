@@ -3,7 +3,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import InfoContainer from './infoContainer';
-import Form from './formContainer';
+import VisitedForm from './formContainer';
 // Import a JSON file that includes the geographical data of US states
 const geoUrl = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
 const USMap = () => {
@@ -13,12 +13,15 @@ const USMap = () => {
     const [visitedRegions, setVisitedRegions] = useState([]);
     // randomize color
     const rgbRandom = () => {
+        function rgbRand() {
+            return Math.floor(Math.random() * 255);
+        }
         return ('rgb(' +
-            Math.floor(Math.random() * 255) +
+            rgbRand() +
             ',' +
-            Math.floor(Math.random() * 255) +
+            rgbRand() +
             ',' +
-            Math.floor(Math.random() * 255) +
+            rgbRand() +
             ')');
     };
     const onRegionClick = async (regionId, regionName) => {
@@ -50,6 +53,6 @@ const USMap = () => {
                                     outline: 'none',
                                 },
                             } }, regionId));
-                    }) }) }), hoveredRegion && _jsxs("div", { children: ["Hovering over: ", hoveredRegion] }), _jsx(InfoContainer, { selectedRegion: selectedRegion }), _jsx(Form, {})] }));
+                    }) }) }), hoveredRegion && _jsxs("div", { children: ["Hovering over: ", hoveredRegion] }), _jsx(InfoContainer, { selectedRegion: selectedRegion }), _jsx(VisitedForm, { region: selectedRegion })] }));
 };
 export default USMap;
