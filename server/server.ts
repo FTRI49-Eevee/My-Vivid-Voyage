@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import generalController from './controllers/generalcontroller.js';
+import cors from 'cors';
 // import { createClient } from '@supabase/supabase-js';
 
 // const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -10,6 +11,7 @@ import generalController from './controllers/generalcontroller.js';
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 const PORT = 8080;
 
 interface DefaultError {
