@@ -13,18 +13,14 @@ const USMap = () => {
     const [hoveredRegion, setHoveredRegion] = useState(null);
     const [visitedRegions, setVisitedRegions] = useState([]);
     const [regionInfo, setRegionInfo] = useState(_jsx("div", {}));
+    const [currCaption, setCurrCaption] = useState('');
+    const [image, setImage] = useState(''); //image url from s3 bucket
     // randomize color
     const rgbRandom = () => {
         function rgbRand() {
             return Math.floor(Math.random() * 255);
         }
-        return ('rgb(' +
-            rgbRand() +
-            ',' +
-            rgbRand() +
-            ',' +
-            rgbRand() +
-            ')');
+        return 'rgb(' + rgbRand() + ',' + rgbRand() + ',' + rgbRand() + ')';
     };
     const onRegionClick = async (regionId, regionName) => {
         console.log(`Clicked state with id: ${regionId}`);
@@ -32,6 +28,11 @@ const USMap = () => {
         await setVisitedRegions([...visitedRegions, regionId]);
         // Perform additional actions, like fetching data for the clicked state
         if (regionId % 2 == 0) {
+            fetch(`/db?${regionName}`)
+                .then(response => response.json())
+                .then(data => {
+                return setRegionInfo(_jsx(InfoContainer, { selectedRegion: regionName, caption: data.caption, image: data.image }));
+            });
             return setRegionInfo(_jsx(InfoContainer, { selectedRegion: regionName }));
         }
         else {
@@ -41,7 +42,7 @@ const USMap = () => {
     // useEffect(() => {
     //   console.log(visitedRegions);
     // }, [visitedRegions]);
-    return (_jsxs("div", { style: { position: 'relative' }, children: [_jsxs("div", { style: { position: 'absolute', top: 10, right: 10 }, children: [" ", _jsx(Logout, {}), " "] }), _jsxs("div", { className: 'map', children: [_jsx("h1", { children: "Clickable US Map" }), _jsx(ComposableMap, { projection: 'geoAlbersUsa', children: _jsx(Geographies, { geography: geoUrl, children: ({ geographies }) => geographies.map((geo) => {
+    return (_jsxs("div", { style: { position: 'relative' }, children: [_jsxs("div", { style: { position: 'absolute', top: 10, right: 10 }, children: [' ', _jsx(Logout, {}), ' '] }), _jsxs("div", { className: "map", children: [_jsx("h1", { children: "Clickable US Map" }), _jsx(ComposableMap, { projection: "geoAlbersUsa", children: _jsx(Geographies, { geography: geoUrl, children: ({ geographies }) => geographies.map((geo) => {
                                 const regionId = geo.id;
                                 const regionName = geo.properties.name;
                                 return (_jsx(Geography, { geography: geo, onMouseEnter: () => setHoveredRegion(regionName), onMouseLeave: () => setHoveredRegion(null), onClick: () => onRegionClick(regionId, regionName), style: {

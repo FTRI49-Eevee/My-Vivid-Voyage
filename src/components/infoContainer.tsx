@@ -7,10 +7,21 @@ function InfoContainer(props) {
   //fetch('/state)
   // }
 
+  const imageLibrary = {
+    'Pennsylvania': 'https://my-visited-states-images.s3.us-west-1.amazonaws.com/IMG_2399.webp',
+    'California': 'https://my-visited-states-images.s3.us-west-1.amazonaws.com/image.webp',
+    "Arizona": 'https://my-visited-states-images.s3.us-west-1.amazonaws.com/eric-arizona.webp',
+    "Texas": 'https://my-visited-states-images.s3.us-west-1.amazonaws.com/IMG_5387.webp',
+    "New York": 'https://my-visited-states-images.s3.us-west-1.amazonaws.com/IMG_0057.webp',
+    "Colorado": 'https://my-visited-states-images.s3.us-west-1.amazonaws.com/IMG_8263_2.webp'
+
+  }
+
+
   return (
     <div>
-      <h1>Info about {selectedRegion} will go here!</h1>
-      <img src='https://i0.wp.com/www.projectwhim.com/wp-content/uploads/2021/06/FA2A7F05-FABD-4035-A2EC-8E9995EDB30Eedit.jpg?fit=800%2C800&ssl=1' />
+      <h1>My Favorite memory from {selectedRegion}!</h1>
+      <img src={imageLibrary[selectedRegion]} />
       <div>
         <p>
           {' '}

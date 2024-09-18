@@ -31,6 +31,8 @@ const AddingRegionInfo = (props) => {
                 const data = await response.json();
                 setImgInput('');
                 setCaption('');
+                document.forms['dataForm'].reset();
+                alert(selectedRegion + " has been added!");
                 console.log('Successful POST', data);
             }
             else {
@@ -41,6 +43,6 @@ const AddingRegionInfo = (props) => {
             console.error('Error:', error);
         }
     };
-    return (_jsxs("form", { className: "dataForm", onSubmit: visitedData, children: [_jsx("input", { type: "file", name: "picture", accept: "image/png, image/jpeg", onChange: handleImage }), _jsx("input", { type: "text", placeholder: "Caption", onChange: (event) => setCaption(event.target.value) }), _jsx("input", { type: "submit" })] }));
+    return (_jsxs("form", { className: "dataForm", name: 'dataForm', onSubmit: visitedData, children: [_jsx("input", { type: "file", name: "picture", accept: "image/png, image/jpeg", onChange: handleImage }), _jsx("input", { type: "text", placeholder: "Caption", onChange: (event) => setCaption(event.target.value) }), _jsx("input", { type: "submit" })] }));
 };
 export default AddingRegionInfo;

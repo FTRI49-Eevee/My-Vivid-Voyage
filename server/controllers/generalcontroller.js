@@ -17,6 +17,8 @@ const generalController = {
     saveData: (req, res, next) => {
         const { selectedRegion, image, caption } = req.body;
         if ((selectedRegion && image) || caption) {
+            const data = [selectedRegion, image, caption];
+            const query = `INSERT `;
             return next();
         }
         else {
