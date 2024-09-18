@@ -1,64 +1,70 @@
 import express, { Request, Response, NextFunction } from 'express';
-import generalController from './controllers/generalcontroller.js';
+import dotenv from 'dotenv';
+// import generalController from './controllers/generalcontroller.js';
 // import { createClient } from '@supabase/supabase-js';
+import userRoutes from './routes/userRoutes.js';
+import session from 'express-session';
+import passport from 'passport';
+import { Profile, Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
-// const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-// const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+dotenv.config();
 
-// export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// const supabaseUrl = process.env.SUPABASE_URL || '';
+// const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || '';
+
+const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
+
+if (!googleClientId || !googleClientSecret) {
+  throw new Error('Google Client ID and Client Secret must be provided in .env file');
+}
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const PORT = 8080;
 
-interface DefaultError {
-  log: string;
-  status: number;
-  message: { err: string };
-}
+app.use(session({
+  secret: process.env.SESSION_SECRET || '',
+  resave: false,
+  saveUninitialized: true,
+}));
 
-app.get('/getmap', generalController.getMap, (req: Request, res: Response) => {
-  console.log('HIT! /getmap');
-  res.status(200).send(res.locals.getMap);
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new GoogleStrategy({
+  clientID: googleClientId,
+  clientSecret: googleClientSecret,
+  callbackURL: 'http://localhost:8080/auth/google/callback',
+  passReqToCallback: false, 
+},
+async (/*accessToken, refreshToken, */ profile: Profile, done: (error: any, user?: any) => void) => {
+  
+  done(null, profile);
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
-app.post(
-  '/savemap',
-  generalController.saveMap,
-  (req: Request, res: Response) => {
-    console.log('HIT! /savemap');
-    res.status(200).send(res.locals.saveMap);
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    res.redirect('/home');
   }
 );
 
-app.get('/db', generalController.getData, (req: Request, res: Response) => {
-  console.log('HIT! /db');
-  res.status(200).send(res.locals.getData);
-});
+app.use(userRoutes);
 
-app.post('/db', generalController.saveData, (req: Request, res: Response) => {
-  console.log('HIT! /db');
-  res.status(200).send(res.locals.saveData);
-});
-
-app.use('/', (_req, res) => {
-  res.status(404).send('Error page not found!');
-});
-
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  const defaultErr: DefaultError = {
-    log: 'An error was caught by the global error handler in server.ts',
-    status: 500,
-    message: {
-      err: 'An error was caught by the global error handler in server.ts',
-    },
-  };
-
-  const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log);
-  return res.status(errorObj.status).json(errorObj.message);
-});
 
 app.listen(PORT, () =>
   console.log(`Server listening on http://localhost:${PORT}`)

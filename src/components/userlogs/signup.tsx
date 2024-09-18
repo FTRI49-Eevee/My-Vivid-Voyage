@@ -1,35 +1,27 @@
 import {useState} from 'react'
 import { useNavigate } from "react-router-dom";
 
-
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const navigate = useNavigate()
 
-  function onButtonClick() {
-    // navigate('/');
-    //request once we get backend setup
-    fetch('/signup', {
-      method: "POST",
+  const onButtonClick = async () => {
+    const response = await fetch('api/signup', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        'username': username,
-        'password': password,
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
-      //logic for successful login
+      body: JSON.stringify({username, password}),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log('SignUp Successfully:', data);
       navigate('/login');
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    } else {
+      console.error('SignUp failed:', data.message);
+    }
   }
 
   return (

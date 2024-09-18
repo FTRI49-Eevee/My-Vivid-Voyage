@@ -16,3 +16,92 @@
 .map {
   width: 800px;
 }
+
+.login, .signup {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #447A90;
+}
+
+h3 {
+  text-align: center;
+  color: black;
+}
+
+label {
+  display: block;
+  margin: 15px 0 5px;
+  color: white;
+}
+
+input[type="text"],
+input[type="password"],
+.inputButton {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.inputButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.inputButton:hover {
+  background-color: #0056b3;
+}
+
+button {
+  width: 100%; 
+  background-color: white; 
+  border: 1px solid #447A90; 
+  color: white; 
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #e0e0e0; 
+}
+
+input[type="button"].inputButton,
+button {
+  background-color: black !important; 
+  border: 1px solid #447A90; 
+  color: #447A90; 
+}
+
+input[type="text"],
+input[type="password"] {
+  color: black;
+  background-color: white;
+  border: 1px solid #447A90; 
+  padding: 10px; /
+  border-radius: 4px;
+}
+.logout-button {
+  background-color: #447A90; 
+  color: white; 
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #365e73;
+}

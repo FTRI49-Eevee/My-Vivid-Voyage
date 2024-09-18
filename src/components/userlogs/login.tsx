@@ -1,4 +1,4 @@
-import {useState , useEffect} from 'react'
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -9,57 +9,44 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/home')
+      navigate('/home');
     }
-  }, [navigate])
+  }, [navigate]);
 
-  function onButtonClick() {
-    // remove navigate and do fetch once backend is setup
-    fetch('/login', {
-      method: "POST",
+  const onButtonClick = async () => {
+    const response = await fetch('api/login', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        'username': username,
-        'password': password,
-      }),
-    })
-    .then(response => {
-      if (!response.ok) {
-      return response.json().then(data => {
-        throw new Error(data.message || 'Login failed');
-      });
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log('Login Successfully:', data.token);
+      navigate('/home');
+    } else {
+      console.error('Login failed:', data.message);
     }
-    return response.json();
-    })
-    .then(data => {
-      console.log(data)
-      localStorage.setItem('token', data.token)
-      //logic for successful login
-      navigate('/home')
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  }
+  };
 
   return (
     <section className='login'>
       <h3>Log In</h3>
-        <label>Username:
-          <input type='text' onChange={(event) => setUsername(event.target.value)}></input> 
-        </label>
-        <label>Password:
-          <input type='password' onChange={(event) => setPassword(event.target.value)}></input> 
-        </label>
+      <label>Username:
+        <input type='text' onChange={(event) => setUsername(event.target.value)} />
+      </label>
+      <label>Password:
+        <input type='password' onChange={(event) => setPassword(event.target.value)} />
+      </label>
 
-        <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
-        <div>No login? </div> <button onClick={() => navigate('/signup')}>Sign Up</button>
-
+      <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} />
+      <div>No login? </div>
+      <button onClick={() => navigate('/signup')}>Sign Up</button>
+      <button onClick={() => window.location.href = 'http://localhost:8080/auth/google'}>Login with Google</button>
     </section>
-  )
+  );
+};
 
-}
-
-export default Login
+export default Login;

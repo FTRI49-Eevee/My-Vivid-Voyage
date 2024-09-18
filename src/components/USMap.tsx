@@ -53,8 +53,8 @@ const USMap: React.FC<USMapProps> = () => {
   // }, [visitedRegions]);
 
   return (
-    <div>
-      <Logout />
+    <div style={{ position: 'relative' }}>
+       <div style={{ position: 'absolute', top: 10, right: 10 }}> <Logout /> </div>
       <div className='map'>
       <h1>Clickable US Map</h1>
       <ComposableMap projection='geoAlbersUsa'>
