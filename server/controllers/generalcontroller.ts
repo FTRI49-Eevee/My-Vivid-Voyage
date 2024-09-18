@@ -12,13 +12,28 @@ const generalController = {
     return next();
   },
 
-  getData: (req: Request, res: Response, next: NextFunction) => {
-    console.log('getData: ', req);
+  getData: async (req: Request, res: Response, next: NextFunction) => {
+    const query = `SELECT * FROM users_states`;
+    // await db.query(query).then((data: unknown) => {
+    //   res.locals.getData = data;
+    // });
     return next();
   },
   saveData: (req: Request, res: Response, next: NextFunction) => {
-    console.log('saveData: ', req);
-    return next();
+    const { selectedRegion, image, caption } = req.body;
+    if ((selectedRegion && image) || caption) {
+      const data: string[] | File[] = [selectedRegion, image, caption];
+      const query: string = `INSERT `;
+      return next();
+    } else {
+      return next({
+        log: 'An error occurred attempting to save data at generalController.saveData',
+        status: 500,
+        message: {
+          err: 'An error occurred attempting to save data at generalController.saveData',
+        },
+      });
+    }
   },
 };
 

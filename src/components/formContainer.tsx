@@ -1,28 +1,37 @@
 import { useState } from 'react';
 
 // form for no data
-const AddingRegionInfo = (region:string | null) => {
-const [imgInput, setImgInput] = useState('');
-const [caption, setCaption] = useState('');
+const AddingRegionInfo = (props: { selectedRegion: string }) => {
+  const { selectedRegion } = props;
+  const [imgInput, setImgInput] = useState<File | string | null>('');
+  const [caption, setCaption] = useState('');
 
-	//image/file handler
-	function handleImage(e) {
-		setImgInput(e.target.files[0])
-	}
+  //image/file handler
+  function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
+    setImgInput(e.target.files?.[0] || null);
+  }
 
-  const visitedData = async (event) => {
+  const visitedData: React.FormEventHandler = async (
+    event: React.ChangeEvent
+  ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     const formData = new FormData();
-    formData.append('region', region+'')
-    formData.append('image', imgInput)
-    formData.append('caption', caption)
+    formData.append('selectedRegion', selectedRegion);
+    if (imgInput instanceof File || typeof imgInput === 'string') {
+      formData.append('image', imgInput);
+    }
+    formData.append('caption', caption);
     console.log('Form submitted with region:', formData);
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    console.log('caption submitted with region:', caption);
 
     try {
-      const response = await fetch("/db", {
+      const response: Response = await fetch('http://localhost:8080/db', {
         method: 'POST',
         body: formData,
-      })
+      });
       if (response.ok) {
         const data = await response.json();
         setImgInput('');
@@ -32,19 +41,23 @@ const [caption, setCaption] = useState('');
         console.log('Error', response.statusText);
       }
     } catch (error) {
-      console.error('Error:', error)
-  }
-    console.log('HI');
+      console.error('Error:', error);
+    }
   };
   return (
-    <form className='dataForm' onSubmit={visitedData}>
+    <form className="dataForm" onSubmit={visitedData}>
       <input
-        type='file'
-        name='picture'
-        accept='image/png, image/jpeg' onChange={handleImage}
+        type="file"
+        name="picture"
+        accept="image/png, image/jpeg"
+        onChange={handleImage}
       />
-      <input type='text' placeholder='Caption' onChange={(event) => setCaption(event.target.value)}></input>
-      <input type='submit'></input>
+      <input
+        type="text"
+        placeholder="Caption"
+        onChange={(event) => setCaption(event.target.value)}
+      ></input>
+      <input type="submit"></input>
     </form>
   );
 };

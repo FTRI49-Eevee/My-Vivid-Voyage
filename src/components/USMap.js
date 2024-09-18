@@ -32,10 +32,10 @@ const USMap = () => {
         await setVisitedRegions([...visitedRegions, regionId]);
         // Perform additional actions, like fetching data for the clicked state
         if (regionId % 2 == 0) {
-            return setRegionInfo(_jsx(InfoContainer, { selectedRegion: selectedRegion }));
+            return setRegionInfo(_jsx(InfoContainer, { selectedRegion: regionName }));
         }
         else {
-            return setRegionInfo(_jsx(VisitedForm, { region: selectedRegion }));
+            return setRegionInfo(_jsx(VisitedForm, { selectedRegion: regionName }));
         }
     };
     // useEffect(() => {
