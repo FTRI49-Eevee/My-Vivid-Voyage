@@ -37,11 +37,12 @@ const USMap: React.FC<USMapProps> = () => {
     setSelectedRegion(regionName);
     await setVisitedRegions([...visitedRegions, regionId]);
     // Perform additional actions, like fetching data for the clicked state
+    
   };
 
-  useEffect(() => {
-    console.log(visitedRegions);
-  }, [visitedRegions]);
+  // useEffect(() => {
+  //   console.log(visitedRegions);
+  // }, [visitedRegions]);
 
   return (
     <div>

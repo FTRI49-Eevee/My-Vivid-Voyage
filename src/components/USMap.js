@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 // USMap.tsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import InfoContainer from './infoContainer';
 import VisitedForm from './formContainer';
@@ -30,9 +30,9 @@ const USMap = () => {
         await setVisitedRegions([...visitedRegions, regionId]);
         // Perform additional actions, like fetching data for the clicked state
     };
-    useEffect(() => {
-        console.log(visitedRegions);
-    }, [visitedRegions]);
+    // useEffect(() => {
+    //   console.log(visitedRegions);
+    // }, [visitedRegions]);
     return (_jsxs("div", { children: [_jsx("h1", { children: "Clickable US Map" }), _jsx(ComposableMap, { projection: 'geoAlbersUsa', children: _jsx(Geographies, { geography: geoUrl, children: ({ geographies }) => geographies.map((geo) => {
                         const regionId = geo.id;
                         const regionName = geo.properties.name;
