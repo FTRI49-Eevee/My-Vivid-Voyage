@@ -15,7 +15,9 @@ const USMap: React.FC<USMapProps> = () => {
   // Handle hover state for UI feedback
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
-  const [visitedRegions, setVisitedRegions] = useState<string[] | number | null>([]);
+  const [visitedRegions, setVisitedRegions] = useState<
+    string[] | number | null
+  >([]);
   const [regionInfo, setRegionInfo] = useState<ReactElement>(<div></div>);
   const [currCaption, setCurrCaption] = useState('');
   const [image, setImage] = useState(''); //image url from s3 bucket
@@ -35,12 +37,17 @@ const USMap: React.FC<USMapProps> = () => {
     // Perform additional actions, like fetching data for the clicked state
     if (regionId % 2 == 0) {
       fetch(`/db?${regionName}`)
-      .then(response => response.json())
-      .then(data => {
-        return setRegionInfo(<InfoContainer selectedRegion={regionName} caption={data.caption} image={data.image} />);
-      })
+        .then((response) => response.json())
+        .then((data) => {
+          return setRegionInfo(
+            <InfoContainer
+              selectedRegion={regionName}
+              caption={data.caption}
+              image={data.image}
+            />
+          );
+        });
       return setRegionInfo(<InfoContainer selectedRegion={regionName} />);
-
     } else {
       return setRegionInfo(<VisitedForm selectedRegion={regionName} />);
     }
@@ -51,8 +58,15 @@ const USMap: React.FC<USMapProps> = () => {
   // }, [visitedRegions]);
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div style={{ position: 'absolute', top: 10, right: 10 }}>
+    <div
+      style={{
+        position: 'absolute',
+        justifyContent: 'center',
+        left: '220px',
+        top: '30px',
+      }}
+    >
+      <div style={{ position: 'relative', top: 10, right: 10 }}>
         {' '}
         <Logout />{' '}
       </div>
@@ -63,7 +77,7 @@ const USMap: React.FC<USMapProps> = () => {
             {({ geographies }) =>
               geographies.map((geo) => {
                 const regionId = geo.id;
-                const regionName = geo.properties.name;
+                const regionName: string = geo.properties.name;
 
                 return (
                   <Geography
@@ -95,7 +109,19 @@ const USMap: React.FC<USMapProps> = () => {
             }
           </Geographies>
         </ComposableMap>
-        {hoveredRegion && <div>Hovering over: {hoveredRegion}</div>}
+        {hoveredRegion && (
+          <div
+            style={{
+              position: 'absolute',
+              padding: '10px',
+              marginBottom: '10px',
+              paddingBottom: '50px',
+              left: '300px',
+            }}
+          >
+            Hovering over: {hoveredRegion}
+          </div>
+        )}
       </div>
       {regionInfo}
     </div>

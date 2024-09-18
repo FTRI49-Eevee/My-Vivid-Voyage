@@ -36,8 +36,8 @@ const AddingRegionInfo = (props: { selectedRegion: string }) => {
         const data = await response.json();
         setImgInput('');
         setCaption('');
-        document.forms['dataForm'].reset()
-        alert(selectedRegion + " has been added!")
+        document.forms['dataForm'].reset();
+        alert(selectedRegion + ' has been added!');
         console.log('Successful POST', data);
       } else {
         console.log('Error', response.statusText);
@@ -47,17 +47,28 @@ const AddingRegionInfo = (props: { selectedRegion: string }) => {
     }
   };
   return (
-    <form className="dataForm" name='dataForm' onSubmit={visitedData}>
+    <form
+      className="dataForm"
+      onSubmit={visitedData}
+      style={{
+        display: 'flex',
+        position: 'absolute',
+        justifyContent: 'center',
+        left: '235px',
+      }}
+    >
       <input
         type="file"
         name="picture"
         accept="image/png, image/jpeg"
         onChange={handleImage}
+        style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}
       />
       <input
         type="text"
         placeholder="Caption"
         onChange={(event) => setCaption(event.target.value)}
+        style={{ width: '300px' }}
       ></input>
       <input type="submit"></input>
     </form>
