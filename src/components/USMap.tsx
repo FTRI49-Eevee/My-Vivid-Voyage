@@ -45,6 +45,7 @@ const USMap: React.FC<USMapProps> = () => {
 
   return (
     <div>
+      <h1>Clickable US Map</h1>
       <ComposableMap projection='geoAlbersUsa'>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>

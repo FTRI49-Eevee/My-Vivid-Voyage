@@ -1,7 +1,10 @@
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import USMap from './components/USMap';
 import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Login from './components/userlogs/login';
+import Signup from './components/userlogs/signup';
 function App() {
-    return (_jsx(_Fragment, { children: _jsxs("div", { children: [_jsx("h1", { children: "Clickable US Map" }), _jsx(USMap, {})] }) }));
+    return (_jsxs(Routes, { children: [_jsx(Route, { path: '/', element: _jsx(Login, {}) }), _jsx(Route, { path: '/home', element: _jsx(USMap, {}) }), _jsx(Route, { path: '/signup', element: _jsx(Signup, {}) })] }));
 }
 export default App;

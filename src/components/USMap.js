@@ -33,7 +33,7 @@ const USMap = () => {
     useEffect(() => {
         console.log(visitedRegions);
     }, [visitedRegions]);
-    return (_jsxs("div", { children: [_jsx(ComposableMap, { projection: 'geoAlbersUsa', children: _jsx(Geographies, { geography: geoUrl, children: ({ geographies }) => geographies.map((geo) => {
+    return (_jsxs("div", { children: [_jsx("h1", { children: "Clickable US Map" }), _jsx(ComposableMap, { projection: 'geoAlbersUsa', children: _jsx(Geographies, { geography: geoUrl, children: ({ geographies }) => geographies.map((geo) => {
                         const regionId = geo.id;
                         const regionName = geo.properties.name;
                         return (_jsx(Geography, { geography: geo, onMouseEnter: () => setHoveredRegion(regionName), onMouseLeave: () => setHoveredRegion(null), onClick: () => onRegionClick(regionId, regionName), style: {
