@@ -28,9 +28,6 @@ const [caption, setCaption] = useState('');
       const response = await fetch("http://localhost:8080/db", {
         mode: 'no-cors',
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         body: formData,
       })
       if (response.ok) {

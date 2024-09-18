@@ -1,6 +1,6 @@
 import express from 'express';
-import multer from 'multer';
 import dotenv from 'dotenv';
+import multer from 'multer';
 import generalController from './controllers/generalcontroller.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
