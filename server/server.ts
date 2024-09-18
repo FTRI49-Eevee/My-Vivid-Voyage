@@ -2,10 +2,10 @@ import express, { Request, Response, NextFunction } from 'express';
 import generalController from './controllers/generalcontroller.js';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+// const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const app = express();
 app.use(express.json());
@@ -35,6 +35,11 @@ app.post(
 app.get('/db', generalController.getData, (req: Request, res: Response) => {
   console.log('HIT! /db');
   res.status(200).send(res.locals.getData);
+});
+
+app.post('/db', generalController.saveData, (req: Request, res: Response) => {
+  console.log('HIT! /db');
+  res.status(200).send(res.locals.saveData);
 });
 
 app.use('/', (_req, res) => {

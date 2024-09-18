@@ -16,6 +16,10 @@ const generalController = {
     console.log('getData: ', req);
     return next();
   },
+  saveData: (req: Request, res: Response, next: NextFunction) => {
+    console.log('saveData: ', req);
+    return next();
+  },
 };
 
 export default generalController;
