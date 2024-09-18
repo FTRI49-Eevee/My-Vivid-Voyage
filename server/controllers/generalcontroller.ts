@@ -22,6 +22,8 @@ const generalController = {
   saveData: (req: Request, res: Response, next: NextFunction) => {
     const { selectedRegion, image, caption } = req.body;
     if ((selectedRegion && image) || caption) {
+      const data: string[] | File[] = [selectedRegion, image, caption];
+      const query: string = `INSERT `;
       return next();
     } else {
       return next({

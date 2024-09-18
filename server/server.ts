@@ -53,6 +53,70 @@ const upload = multer({
   storage: Storage,
 });
 
+// session auth
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || '',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: googleClientId,
+      clientSecret: googleClientSecret,
+      callbackURL: 'http://localhost:8080/auth/google/callback',
+      passReqToCallback: false,
+    },
+    async (
+      accessToken,
+      refreshToken,
+      profile: Profile,
+      done: (error: any, user?: any) => void
+    ) => {
+      done(null, profile);
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+app.get(
+  '/auth/google',
+  (req, res, next) => {
+    console.log('Initiating Google Auth');
+    next();
+  },
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    console.log('oauth successfull', req.user);
+    res.redirect('http://localhost:3000/home');
+  },
+  (err, req, res, next) => {
+    console.error('Authentication error:', err);
+    res.redirect('/');
+  }
+);
+
+app.use(userRoutes);
+
+// endpoint routes
 app.get('/getmap', generalController.getMap, (req: Request, res: Response) => {
   res.status(200).send(res.locals.getMap);
 });
