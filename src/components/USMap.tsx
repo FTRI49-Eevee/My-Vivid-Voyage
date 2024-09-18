@@ -16,9 +16,11 @@ const USMap: React.FC<USMapProps> = () => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [visitedRegions, setVisitedRegions] = useState<
-    string[] | number[] | null
+    string[] | number | null
   >([]);
   const [regionInfo, setRegionInfo] = useState<ReactElement>(<div></div>);
+  const [currCaption, setCurrCaption] = useState('');
+  const [image, setImage] = useState(''); //image url from s3 bucket
 
   // randomize color
   const rgbRandom = (): string => {
@@ -34,6 +36,17 @@ const USMap: React.FC<USMapProps> = () => {
     await setVisitedRegions([...visitedRegions, regionId]);
     // Perform additional actions, like fetching data for the clicked state
     if (regionId % 2 == 0) {
+      fetch(`/db?${regionName}`)
+        .then((response) => response.json())
+        .then((data) => {
+          return setRegionInfo(
+            <InfoContainer
+              selectedRegion={regionName}
+              caption={data.caption}
+              image={data.image}
+            />
+          );
+        });
       return setRegionInfo(<InfoContainer selectedRegion={regionName} />);
     } else {
       return setRegionInfo(<VisitedForm selectedRegion={regionName} />);
@@ -110,16 +123,7 @@ const USMap: React.FC<USMapProps> = () => {
           </div>
         )}
       </div>
-      {/* <InfoContainer selectedRegion={selectedRegion} />
-      <VisitedForm region={selectedRegion}/> */}
-      <div
-        style={{
-          position: 'absolute',
-          left: '0px',
-        }}
-      >
-        {regionInfo}
-      </div>
+      {regionInfo}
     </div>
   );
 };
