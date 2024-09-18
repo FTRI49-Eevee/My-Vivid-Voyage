@@ -9,7 +9,8 @@
     "watch": "tsc --watch",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "nodemon ./server/server.js"
+    "server": "nodemon ./server/server.js",
+    "test": "vitest"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
@@ -37,6 +38,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "vitest": "^2.1.1"
   }
 }
