@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import generalController from '../controllers/generalcontroller';
-
 const generalRouter = Router();
 
 generalRouter.get('/getMap', generalController.getMap, (req, res) => {
